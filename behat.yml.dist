@@ -1,0 +1,16 @@
+default:
+  autoload:
+    '': %paths.base%/features/bootstrap
+  suites:
+    default:
+      paths: [ %paths.base%/features ]
+
+formatter:
+  name:                     pretty
+  parameters:
+    decorated:              true
+    verbose:                false
+    time:                   true
+    language:               en
+    output_path:            null
+    multiline_arguments:    true

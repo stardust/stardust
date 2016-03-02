@@ -1,0 +1,34 @@
+imports:
+  - { resource: "routes/default.yml" }
+
+services:
+  _defaults: { public: true }
+
+  route.collection:
+    class: Symfony\Component\Routing\RouteCollection
+    tags:
+      - { name: route_collection }
+
+  router.request.context:
+    class: Symfony\Component\Routing\RequestContext
+    calls:
+      - [ fromRequest, [ "@request" ] ]
+
+  router.generator:
+    class: Symfony\Component\Routing\Generator\UrlGenerator
+    arguments:
+      - "@route.collection"
+      - "@router.request.context"
+
+  router.matcher:
+    class: Symfony\Component\Routing\Matcher\UrlMatcher
+    arguments:
+      - "@route.collection"
+      - "@router.request.context"
+
+  router.listener:
+    class: Symfony\Component\HttpKernel\EventListener\RouterListener
+    arguments:
+      - "@router.matcher"
+      - "@request.stack"
+      - "@router.request.context"

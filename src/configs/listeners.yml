@@ -1,0 +1,23 @@
+services:
+  _defaults: { public: true }
+
+  listener.router:
+    class: Symfony\Component\HttpKernel\EventListener\RouterListener
+    arguments:
+      - "@router.matcher"
+      - "@request.stack"
+
+  listener.response:
+    class: Symfony\Component\HttpKernel\EventListener\ResponseListener
+    arguments: [ "%app.charset%" ]
+
+  listener.response.string:
+    class: Stardust\Core\Listeners\StringResponseListener
+
+  listener.response.array:
+    class: Stardust\Core\Listeners\ArrayResponseListener
+
+  listener.error:
+    class: Symfony\Component\HttpKernel\EventListener\ErrorListener
+    arguments:
+      - 'Stardust\Core\Controllers\ErrorController::errorAction'

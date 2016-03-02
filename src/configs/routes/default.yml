@@ -1,0 +1,10 @@
+services:
+  _defaults: { public: true }
+
+  route.home:
+    class: Symfony\Component\Routing\Route
+    arguments:
+      - '/'
+      - { _controller: 'stardust.core.controllers.default_controller:indexAction' }
+    tags:
+      - { name: route, route_name: 'route_home'}

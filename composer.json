@@ -1,0 +1,53 @@
+{
+  "name": "stardust/stardust",
+  "description": "Stardust is what the application of your dreams is made of",
+  "type": "project",
+  "license": "MIT",
+  "keywords": ["framework"],
+  "homepage": "http://stardust.com/",
+  "authors": [
+    {
+      "name": "Marco \"Debo\" De Bortoli",
+      "email": "marco.debo.debortoli@gmail.com",
+      "homepage": "https://debo.io",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Stardust\\": "app"
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "require": {
+    "php": "^7.2",
+    "roave/security-advisories": "dev-master",
+    "symfony/http-foundation": "^4.4",
+    "symfony/routing": "^4.4",
+    "symfony/http-kernel": "^4.4",
+    "symfony/event-dispatcher": "^4.4",
+    "symfony/dependency-injection": "^4.4",
+    "symfony/proxy-manager-bridge": "^4.4",
+    "symfony/config": "^4.4",
+    "twig/twig": "^1.27",
+    "monolog/monolog": "^1.21",
+    "pug-php/pug": "^2.4",
+    "talesoft/tale-jade": "^1.4"
+  },
+  "require-dev": {
+    "behat/behat": "^3.5",
+    "phpspec/phpspec": "^6.0",
+    "phpunit/phpunit": "^8.4",
+    "sensiolabs/behat-page-object-extension": "^2.3",
+    "squizlabs/php_codesniffer": "^3.5",
+    "pdepend/pdepend": "^2.5",
+    "phpmd/phpmd": "^2.7",
+    "sebastian/phpcpd": "^4.1",
+    "mikey179/vfsstream": "^1.6",
+    "phpstan/phpstan": "^0.11.19"
+  }
+}

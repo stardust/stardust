@@ -1,0 +1,7 @@
+services:
+  _defaults: { public: true }
+
+  pug:
+    class: Pug\Pug
+    arguments:
+      - { baseDir: "%app.root%/app/Resources", prettyprint: "%pug.prettyprint%", extension: "%pug.extension%", cache: "%app.root%/cache/pug" }

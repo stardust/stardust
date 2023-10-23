@@ -37,8 +37,7 @@
     "symfony/config": "^6.3",
     "twig/twig": "^3.7",
     "monolog/monolog": "^3.4",
-    "pug-php/pug": "^3.5",
-    "talesoft/tale-jade": "^1.4"
+    "pug-php/pug": "^3.5"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",

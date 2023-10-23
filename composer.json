@@ -17,37 +17,39 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "Stardust\\": "app"
+      "Stardust\\": "src"
     }
   },
   "config": {
-    "bin-dir": "bin"
+    "bin-dir": "bin",
+    "allow-plugins": {
+      "nodejs-php-fallback/nodejs-php-fallback": true
+    }
   },
   "require": {
-    "php": "^7.2",
-    "roave/security-advisories": "dev-master",
-    "symfony/http-foundation": "^4.4",
-    "symfony/routing": "^4.4",
-    "symfony/http-kernel": "^4.4",
-    "symfony/event-dispatcher": "^4.4",
-    "symfony/dependency-injection": "^4.4",
-    "symfony/proxy-manager-bridge": "^4.4",
-    "symfony/config": "^4.4",
-    "twig/twig": "^1.27",
-    "monolog/monolog": "^1.21",
-    "pug-php/pug": "^2.4",
+    "php": "^8.0",
+    "symfony/http-foundation": "^6.3",
+    "symfony/routing": "^6.3",
+    "symfony/http-kernel": "^6.3",
+    "symfony/event-dispatcher": "^6.3",
+    "symfony/dependency-injection": "^6.3",
+    "symfony/proxy-manager-bridge": "^6.3",
+    "symfony/config": "^6.3",
+    "twig/twig": "^3.7",
+    "monolog/monolog": "^3.4",
+    "pug-php/pug": "^3.5",
     "talesoft/tale-jade": "^1.4"
   },
   "require-dev": {
-    "behat/behat": "^3.5",
-    "phpspec/phpspec": "^6.0",
-    "phpunit/phpunit": "^8.4",
+    "roave/security-advisories": "dev-latest",
+    "behat/behat": "^3.13",
+    "phpspec/phpspec": "^7.4",
+    "phpunit/phpunit": "^10.4",
     "sensiolabs/behat-page-object-extension": "^2.3",
-    "squizlabs/php_codesniffer": "^3.5",
-    "pdepend/pdepend": "^2.5",
-    "phpmd/phpmd": "^2.7",
-    "sebastian/phpcpd": "^4.1",
+    "squizlabs/php_codesniffer": "^3.7",
+    "pdepend/pdepend": "^2.15",
+    "phpmd/phpmd": "^2.14",
     "mikey179/vfsstream": "^1.6",
-    "phpstan/phpstan": "^0.11.19"
+    "phpstan/phpstan": "^1.10"
   }
 }

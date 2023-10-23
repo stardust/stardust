@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+
+# IDE
+.idea
+
+# Generated
+.bundle/
+bin/
+cache/
+vendor/
+
+# Assets
+media/

@@ -1,0 +1,68 @@
+services:
+  _defaults: { public: true }
+
+  config.processor:
+    class: Symfony\Component\Config\Definition\Processor
+
+  application.config.definition:
+    class: Stardust\Core\Services\Configuration\ApplicationConfigurationDefinitionService
+
+  application.config.loader:
+    class: Stardust\Core\Services\Configuration\ApplicationConfigurationLoaderService
+    arguments:
+      - "@config.processor"
+      - "@application.config.definition"
+
+  config.loader.resolver:
+    class: Symfony\Component\Config\Loader\LoaderResolver
+    arguments:
+      - [ "@application.config.loader" ]
+
+  config.loader:
+    class: Symfony\Component\Config\Loader\DelegatingLoader
+    arguments:
+      - "@config.loader.resolver"
+
+  config:
+    class: Stardust\Core\Services\Configuration\ConfigurationLoaderService
+    arguments:
+      - "@config.loader"
+      - "%app.environment%"
+    calls:
+      - [ load, [ "%app.configuration_directories%" ] ]
+
+  request.attributes:
+    class: Symfony\Component\HttpFoundation\ParameterBag
+
+  request:
+    class: Symfony\Component\HttpFoundation\Request
+    factory: [ Symfony\Component\HttpFoundation\Request, createFromGlobals ]
+    properties:
+      attributes: "@request.attributes"
+
+  session:
+    class: Symfony\Component\HttpFoundation\Session\Session
+
+  request.stack:
+    class: Symfony\Component\HttpFoundation\RequestStack
+
+  resolver:
+    class: Symfony\Component\HttpKernel\Controller\ControllerResolver
+
+  application:
+    class: Stardust\Core\Application
+    arguments:
+      - "@dispatcher"
+      - "@resolver"
+      - "@request.stack"
+
+  cache.store:
+    class: Symfony\Component\HttpKernel\HttpCache\Store
+    arguments:
+      - "%app.root%/cache/app"
+
+  cached:
+    class: Symfony\Component\HttpKernel\HttpCache\HttpCache
+    arguments:
+      - "@application"
+      - "@cache.store"

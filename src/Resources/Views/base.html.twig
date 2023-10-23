@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="content-language" content="en-GB"/>
+
+    <title>Stardust | StarDust is what the application of your dreams is made of</title>
+
+    <meta name="description" content=""/>
+
+    <meta name="keywords" content=""/>
+
+    {#<base href="http://localhost:8888/" target="_blank">#}
+
+    <link rel="stylesheet" href="/css/base.css">
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="holygrail">
+<header>
+    <div class="l-grid">
+        <h1 class="logo-main">
+
+        </h1>
+    </div>
+</header>
+<div class="holygrail-body">
+
+    {% block body %}{% endblock %}
+
+    <aside class="holygrail-nav"></aside>
+    <aside class="holygrail-ads"></aside>
+</div>
+<footer>
+    <div class="credits">
+        <span class="credit">Created and maintained by <a href="http://debo.io" target="_blank">Debo</a> © 2015.</span>
+
+        <span class="credit">Source code and examples dual licensed under <a
+                    href="http://opensource.org/licenses/MIT"
+                    target="_blank">MIT</a> and <a
+                    href="http://opensource.org/licenses/GPL-3.0"
+                    target="_blank">GPL</a>.</span>
+
+        <span class="credit">Website and documentation licensed under <a
+                    href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>.</span>
+    </div>
+</footer>
+
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+{% endblock %}
+</body>
+</html>

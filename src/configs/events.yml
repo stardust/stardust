@@ -1,0 +1,11 @@
+services:
+  _defaults: { public: true }
+
+  dispatcher:
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+    calls:
+      - [ addSubscriber, [ "@listener.router" ] ]
+      - [ addSubscriber, [ "@listener.response" ] ]
+      - [ addSubscriber, [ "@listener.error" ] ]
+      - [ addSubscriber, [ "@listener.response.string" ] ]
+      - [ addSubscriber, [ "@listener.response.array" ] ]

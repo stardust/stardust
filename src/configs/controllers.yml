@@ -1,0 +1,17 @@
+services:
+  _defaults: { public: true }
+
+  service.resolver:
+    class: Stardust\Core\Services\ControllerResolverService
+    arguments:
+      - "@service_container"
+      - "@service.resolver.inner"
+    public: false
+    decorates: resolver
+
+  stardust.core.controllers.default_controller:
+    lazy: true
+    class: Stardust\Core\Controllers\DefaultController
+    arguments:
+      - "@config"
+      - "@session"

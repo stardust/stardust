@@ -1,0 +1,6 @@
+imports:
+  - { resource: "kernel.yml" }
+  - { resource: "routing.yml" }
+  - { resource: "listeners.yml" }
+  - { resource: "events.yml" }
+  - { resource: "controllers.yml" }

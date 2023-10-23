@@ -1,0 +1,13 @@
+services:
+  _defaults: { public: true }
+
+  twig.loader:
+    class: Twig\Loader\FilesystemLoader
+    arguments:
+      - "%app.root%/app/Resources"
+
+  twig:
+    class: Twig\Environment
+    arguments:
+      - "@twig.loader"
+      - { debug: "%twig.debug%", autoescape: false, cache: "%app.root%/cache/twig" }

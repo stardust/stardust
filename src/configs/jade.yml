@@ -1,0 +1,7 @@
+services:
+  _defaults: { public: true }
+
+  jade:
+    class: Tale\Jade\Renderer
+    arguments:
+      - { pretty: "%jade.pretty%", ttl: 3600, cache_path: "%app.root%/cache/jade", paths: [ "%app.root%/app/Resources" ] }

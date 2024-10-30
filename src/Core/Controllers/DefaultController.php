@@ -3,7 +3,7 @@ namespace Stardust\Core\Controllers;
 
 use Stardust\Core\Services\Configuration\ConfigurationLoaderService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController
@@ -17,7 +17,7 @@ class DefaultController
         $this->configuration = $configuration->values();
         $this->session       = $session;
 
-        $defaultBag = new NamespacedAttributeBag('default');
+        $defaultBag = new AttributeBag('default');
         $defaultBag->setName('Default');
         $this->session->registerBag($defaultBag);
 

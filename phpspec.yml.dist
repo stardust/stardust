@@ -2,4 +2,4 @@ suites:
   default:
     namespace: Stardust
     psr4_prefix: Stardust
-    src_path: app/
+    src_path: src/

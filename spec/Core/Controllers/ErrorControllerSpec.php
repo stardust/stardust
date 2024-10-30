@@ -4,8 +4,7 @@ namespace spec\Stardust\Core\Controllers;
 
 use Stardust\Core\Controllers\ErrorController;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class ErrorControllerSpec extends ObjectBehavior
 {

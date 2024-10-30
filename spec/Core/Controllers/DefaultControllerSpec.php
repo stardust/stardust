@@ -8,6 +8,7 @@ use Prophecy\Argument;
 use Stardust\Core\Services\Configuration\ConfigurationLoaderService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 
 class DefaultControllerSpec extends ObjectBehavior
 {
@@ -16,6 +17,8 @@ class DefaultControllerSpec extends ObjectBehavior
         $testConfiguration = $this->getTestConfiguration();
 
         $configuration->values()->willReturn($testConfiguration);
+        $session->start()->willReturn(true);
+        $session->registerBag(Argument::type(AttributeBag::class))->shouldBeCalled();
 
         $this->beConstructedWith($configuration, $session);
     }

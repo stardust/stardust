@@ -7,15 +7,9 @@ use Symfony\Component\Yaml\Yaml;
 
 class YamlConfiguration implements Configuration
 {
-    /**
-     * @var mixed
-     */
-    private $configurationValues;
+    private mixed $configurationValues;
 
-    /**
-     * @var string
-     */
-    private $resource;
+    private string $resource;
 
     /**
      * YamlConfiguration constructor.
@@ -28,26 +22,17 @@ class YamlConfiguration implements Configuration
         $this->configurationValues = $this->parseConfiguration($resource);
     }
 
-    /**
-     * @return bool
-     */
-    public function extendsConfiguration()
+    public function extendsConfiguration(): bool
     {
         return array_key_exists('extends', $this->configurationValues);
     }
 
-    /**
-     * @return string
-     */
-    public function path()
+    public function path(): string
     {
         return dirname(dirname($this->resource)) . DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * @return string|null
-     */
-    public function parentEnvironment()
+    public function parentEnvironment(): string|null
     {
         $parentEnvironment = null;
         if (array_key_exists('extends', $this->configurationValues)) {
@@ -57,18 +42,12 @@ class YamlConfiguration implements Configuration
         return $parentEnvironment;
     }
 
-    /**
-     * @return string
-     */
-    public function file()
+    public function file(): string
     {
         return basename($this->resource);
     }
 
-    /**
-     * @return mixed
-     */
-    public function values()
+    public function values(): mixed
     {
         return $this->configurationValues;
     }

@@ -14,16 +14,13 @@ class TwigRendererListener implements EventSubscriberInterface
 {
     public const DEFAULT_FORMAT = 'html';
 
-    private $acceptedFormats = [
+    private array $acceptedFormats = [
         'text/html',
         'application/json',
         'application/xml',
     ];
 
-    /**
-     * @var Environment
-     */
-    private $twig;
+    private Environment $twig;
 
     /**
      * @param Environment $twig
@@ -64,7 +61,7 @@ class TwigRendererListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents() : array
+    public static function getSubscribedEvents(): array
     {
         return ['kernel.view' => 'onView'];
     }

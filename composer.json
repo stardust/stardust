@@ -23,7 +23,8 @@
   "config": {
     "bin-dir": "bin",
     "allow-plugins": {
-      "nodejs-php-fallback/nodejs-php-fallback": true
+      "nodejs-php-fallback/nodejs-php-fallback": true,
+      "phpstan/extension-installer": true
     }
   },
   "require": {
@@ -41,7 +42,7 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "behat/behat": "^3.15",
+    "behat/behat": "^3.26",
     "sensiolabs/behat-page-object-extension": "^2.3",
     "squizlabs/php_codesniffer": "^3.7",
     "pdepend/pdepend": "^2.16",
@@ -49,6 +50,8 @@
     "mikey179/vfsstream": "^1.6",
     "phpstan/phpstan": "^1.12",
     "phpunit/phpunit": "^10.4",
-    "phpspec/phpspec": "^7.5"
+    "phpspec/phpspec": "^8.0",
+    "phpstan/extension-installer": "^1.4",
+    "phpstan/phpstan-symfony": "^1.4"
   }
 }

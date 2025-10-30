@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController
 {
-    private $configuration;
+    private mixed $configuration;
 
-    private $session;
+    private Session $session;
 
     public function __construct(ConfigurationLoaderService $configuration, Session $session)
     {

@@ -12,7 +12,7 @@ class PugRendererListener implements EventSubscriberInterface
 {
     public const DEFAULT_FORMAT = 'html';
 
-    private $acceptedFormats = [
+    private array $acceptedFormats = [
         'text/html',
         'application/json',
         'application/xml',
@@ -53,7 +53,7 @@ class PugRendererListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents() : array
+    public static function getSubscribedEvents(): array
     {
         return ['kernel.view' => 'onView'];
     }

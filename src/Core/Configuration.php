@@ -3,23 +3,11 @@ namespace Stardust\Core;
 
 interface Configuration
 {
-    /**
-     * @return bool
-     */
-    public function extendsConfiguration();
+    public function extendsConfiguration(): bool;
 
-    /**
-     * @return string
-     */
-    public function path();
+    public function path(): string;
 
-    /**
-     * @return string|null
-     */
-    public function parentEnvironment();
+    public function parentEnvironment(): string|null;
 
-    /**
-     * @return string
-     */
-    public function file();
+    public function file(): string;
 }

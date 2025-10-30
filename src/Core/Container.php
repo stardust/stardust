@@ -12,7 +12,7 @@ class Container extends ContainerBuilder
 {
     const CACHE_FILE = __DIR__ . '/../../cache/app/container.php';
 
-    public static function build(array $parameters)
+    public static function build(array $parameters): self
     {
         if (self::isCached()) {
             $container = self::loadCache();
@@ -42,12 +42,12 @@ class Container extends ContainerBuilder
         return $container;
     }
 
-    private static function isCached()
+    private static function isCached(): bool
     {
         return file_exists(self::CACHE_FILE);
     }
 
-    private static function loadCache()
+    private static function loadCache(): \ProjectServiceContainer
     {
         require self::CACHE_FILE;
 

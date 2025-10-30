@@ -27,7 +27,7 @@ class StringResponseListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents() : array
+    public static function getSubscribedEvents(): array
     {
         return ['kernel.view' => 'onView'];
     }

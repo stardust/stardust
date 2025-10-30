@@ -1,0 +1,27 @@
+# phpstan.neon.dist
+
+parameters:
+    # Maximum strictness
+    level: max
+
+    # Directories to analyse
+    paths:
+        - src
+        - spec
+
+    # Stubs for generated or missing classes
+    stubFiles:
+        - %currentWorkingDirectory%/stubs/Stardust/Core/Container/ProjectServiceContainer.php
+
+    # Ignore unavoidable errors
+    ignoreErrors:
+        - '#Instantiated class ProjectServiceContainer not found#'
+
+    # Disable Symfony container analysis (you don't have one)
+    symfony:
+        container_xml_path: null
+
+    # Exclude folders that shouldn’t be analysed
+    excludePaths:
+        - %currentWorkingDirectory%/var
+        - %currentWorkingDirectory%/vendor

@@ -9,10 +9,6 @@ parameters:
         - src
         - spec
 
-    # Stubs for generated or missing classes
-    stubFiles:
-        - %currentWorkingDirectory%/stubs/Stardust/Core/Container/ProjectServiceContainer.php
-
     # Ignore unavoidable errors
     ignoreErrors:
         - '#Instantiated class ProjectServiceContainer not found#'

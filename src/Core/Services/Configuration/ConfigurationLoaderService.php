@@ -2,39 +2,36 @@
 
 namespace Stardust\Core\Services\Configuration;
 
+use Exception;
 use Symfony\Component\Config\Exception\FileLoaderLoadException;
 use Symfony\Component\Config\Loader\DelegatingLoader;
 use Symfony\Component\Finder\Finder;
 
 class ConfigurationLoaderService
 {
-    private $environment;
+    private string $environment;
 
-    /**
-     * @var DelegatingLoader
-     */
-    private $loader = null;
+    private DelegatingLoader $loader;
 
-    private $configurationValues = [];
+    private mixed $configurationValues = [];
 
-    public function __construct(DelegatingLoader $loader, $environment)
+    public function __construct(DelegatingLoader $loader, string $environment)
     {
         $this->environment = $environment;
         $this->loader      = $loader;
     }
 
     /**
-     * Loads a resource.
-     *
-     * @param $directories
-     * @return bool
-     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
-     * @throws \Exception
+     * @param mixed $directories
      */
-    public function load($directories)
+    public function load(mixed $directories): bool
     {
         try {
             $configurationValues = [];
+            if (!is_iterable($directories)) {
+                return false;
+            }
+            
             foreach ($directories as $directory) {
                 $location = $directory . DIRECTORY_SEPARATOR . $this->environment;
                 foreach (Finder::create()->files()->in($location)->name('*.yml') as $file) {
@@ -48,17 +45,15 @@ class ConfigurationLoaderService
                 }
             }
 
-            $this->configurationValues = json_decode(json_encode($configurationValues));
+            $this->configurationValues = json_decode(json_encode($configurationValues) ?: '{}');
 
             return true;
-        } catch (FileLoaderLoadException $fileLoaderLoadException) {
-            throw $fileLoaderLoadException;
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             throw $exception;
         }
     }
 
-    public function values()
+    public function values(): mixed
     {
         return $this->configurationValues;
     }

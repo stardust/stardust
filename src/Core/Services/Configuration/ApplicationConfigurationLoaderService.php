@@ -32,15 +32,12 @@ class ApplicationConfigurationLoaderService extends FileLoader
     }
 
     /**
-     * Loads a resource.
-     *
-     * @param $resource
-     * @param null $type
-     * @return array
+     * @return array<string, mixed>
      */
-    public function load($resource, $type = null)
+    public function load(mixed $resource, string $type = null): array
     {
-        $configuration = $this->getConfiguration($resource);
+        $resourceStr = is_string($resource) ? $resource : '';
+        $configuration = $this->getConfiguration($resourceStr);
 
         $configurationValues = $configuration->values();
         if ($configuration->extendsConfiguration()) {
@@ -50,23 +47,24 @@ class ApplicationConfigurationLoaderService extends FileLoader
 
             $parentConfiguration = $this->getConfiguration($configurationPath . $parentEnvironment . $configurationFile);
 
-            $configurationValues = array_replace_recursive($parentConfiguration->values(), $configuration->values());
+            $parentValues = $parentConfiguration->values();
+            $currentValues = $configuration->values();
+            
+            if (is_array($parentValues) && is_array($currentValues)) {
+                $configurationValues = array_replace_recursive($parentValues, $currentValues);
+            } else {
+                $configurationValues = $currentValues;
+            }
 
-            unset($configurationValues['extends']);
+            if (is_array($configurationValues)) {
+                unset($configurationValues['extends']);
+            }
         }
 
-        return $this->processor->processConfiguration($this->configDefinition, $configurationValues);
+        return $this->processor->processConfiguration($this->configDefinition, [$configurationValues]);
     }
 
-    /**
-     * Returns whether this class supports the given resource.
-     *
-     * @param mixed $resource A resource
-     * @param string|null $type The resource type or null if unknown
-     *
-     * @return bool True if this class supports the given resource, false otherwise
-     */
-    public function supports($resource, $type = null)
+    public function supports(mixed $resource, string $type = null): bool
     {
         return is_string($resource) && 'application' === pathinfo(
             $resource,
@@ -74,11 +72,7 @@ class ApplicationConfigurationLoaderService extends FileLoader
         );
     }
 
-    /**
-     * @param $resource
-     * @return mixed
-     */
-    private function getConfiguration($resource)
+    private function getConfiguration(string $resource): YamlConfiguration
     {
         return new YamlConfiguration($resource);
     }

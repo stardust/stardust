@@ -13,10 +13,8 @@ class YamlConfiguration implements Configuration
 
     /**
      * YamlConfiguration constructor.
-     *
-     * @param $resource
      */
-    public function __construct($resource)
+    public function __construct(string $resource)
     {
         $this->resource            = $resource;
         $this->configurationValues = $this->parseConfiguration($resource);
@@ -24,7 +22,7 @@ class YamlConfiguration implements Configuration
 
     public function extendsConfiguration(): bool
     {
-        return array_key_exists('extends', $this->configurationValues);
+        return is_array($this->configurationValues) && array_key_exists('extends', $this->configurationValues);
     }
 
     public function path(): string
@@ -35,7 +33,7 @@ class YamlConfiguration implements Configuration
     public function parentEnvironment(): string|null
     {
         $parentEnvironment = null;
-        if (array_key_exists('extends', $this->configurationValues)) {
+        if (is_array($this->configurationValues) && array_key_exists('extends', $this->configurationValues)) {
             $parentEnvironment = $this->configurationValues['extends'];
         }
 
@@ -52,13 +50,9 @@ class YamlConfiguration implements Configuration
         return $this->configurationValues;
     }
 
-    /**
-     * @param $resource
-     *
-     * @return mixed
-     */
-    private function parseConfiguration($resource)
+    private function parseConfiguration(string $resource): mixed
     {
-        return Yaml::parse(file_get_contents($resource));
+        $content = file_get_contents($resource);
+        return $content !== false ? Yaml::parse($content) : null;
     }
 }

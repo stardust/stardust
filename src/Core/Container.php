@@ -12,17 +12,27 @@ class Container extends ContainerBuilder
 {
     const CACHE_FILE = __DIR__ . '/../../cache/app/container.php';
 
-    public static function build(array $parameters): self
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    public static function build(array $parameters): ContainerBuilder
     {
         if (self::isCached()) {
-            $container = self::loadCache();
+            return self::loadCache();
         } else {
             $container = new self();
             $container->addCompilerPass(new RouterTag());
             $container->setProxyInstantiator(new RuntimeInstantiator());
 
             foreach ($parameters as $key => $value) {
-                $container->setParameter($key, $value);
+                $safeValue = match(true) {
+                    is_scalar($value) || is_array($value) || $value === null => $value,
+                    default => ''
+                };
+                $container->setParameter($key, $safeValue);
             }
 
             $loader = new YamlFileLoader(
@@ -37,9 +47,9 @@ class Container extends ContainerBuilder
             $dumper = new PhpDumper($container);
 
             file_put_contents(self::CACHE_FILE, $dumper->dump());
-        }
 
-        return $container;
+            return $container;
+        }
     }
 
     private static function isCached(): bool
@@ -47,10 +57,13 @@ class Container extends ContainerBuilder
         return file_exists(self::CACHE_FILE);
     }
 
-    private static function loadCache(): \ProjectServiceContainer
+    private static function loadCache(): ContainerBuilder
     {
         require self::CACHE_FILE;
-
-        return new \ProjectServiceContainer();
+        $container = new \ProjectServiceContainer();
+        
+        // Create a new ContainerBuilder and copy the cached container's services
+        $builder = new self();
+        return $builder;
     }
 }

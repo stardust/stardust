@@ -12,6 +12,9 @@ class PugRendererListener implements EventSubscriberInterface
 {
     public const DEFAULT_FORMAT = 'html';
 
+    /**
+     * @var array<string>
+     */
     private array $acceptedFormats = [
         'text/html',
         'application/json',
@@ -41,9 +44,12 @@ class PugRendererListener implements EventSubscriberInterface
                 'cache' => '%app.root%/cache/pug',
             ]);
 
+            $basedir = $pug->getOption('basedir');
+            $basedirStr = is_string($basedir) ? $basedir : '';
+            
             $response = new Response(
-                $pug->render(sprintf('%s/Views/%s/%s.%s%s', $pug->getOption('basedir'), $controllerName, $action, $format, $pug->getExtension()), [
-                    'content' => $response['content'],
+                $pug->render(sprintf('%s/Views/%s/%s.%s.pug', $basedirStr, $controllerName, $action, $format), [
+                    'content' => $response['content'] ?? '',
                 ])
             );
 
@@ -58,12 +64,12 @@ class PugRendererListener implements EventSubscriberInterface
         return ['kernel.view' => 'onView'];
     }
 
-    private function getController(ViewEvent $event)
+    private function getController(ViewEvent $event): mixed
     {
         return $event->getRequest()->attributes->get('_controller');
     }
 
-    private function getBundle($definition)
+    private function getBundle(mixed $definition): string
     {
         $bundle = $this->matchExpressions([
             '/(?<=Stardust\\\\).*?(?=\\\\Controllers)/',
@@ -73,7 +79,7 @@ class PugRendererListener implements EventSubscriberInterface
         return ucfirst($bundle);
     }
 
-    private function getControllerName($definition)
+    private function getControllerName(mixed $definition): string
     {
         $controller = $this->matchExpressions([
             '/(?<=Controllers\\\\).*?(?=Controller)/',
@@ -83,7 +89,7 @@ class PugRendererListener implements EventSubscriberInterface
         return ucfirst($controller);
     }
 
-    private function getAction($definition)
+    private function getAction(mixed $definition): string
     {
         return $this->matchExpressions([
             '/(?<=::).*?(?=Action)/',
@@ -91,19 +97,24 @@ class PugRendererListener implements EventSubscriberInterface
         ], $definition);
     }
 
-    private function matchExpressions(array $expressions, $definition)
+    /**
+     * @param array<string> $expressions
+     */
+    private function matchExpressions(array $expressions, mixed $definition): string
     {
+        $match = [];
+        $definitionStr = is_string($definition) ? $definition : '';
         foreach ($expressions as $expression) {
-            preg_match($expression, $definition, $match);
+            preg_match($expression, $definitionStr, $match);
             if (!empty($match)) {
                 break;
             }
         }
 
-        return array_shift($match);
+        return array_shift($match) ?? '';
     }
 
-    private function getResponseFormat($acceptedFormat)
+    private function getResponseFormat(mixed $acceptedFormat): string
     {
         $responseFormat = self::DEFAULT_FORMAT;
         if (in_array($acceptedFormat, $this->acceptedFormats, true)) {

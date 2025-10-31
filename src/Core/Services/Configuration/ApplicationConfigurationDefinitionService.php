@@ -12,7 +12,7 @@ class ApplicationConfigurationDefinitionService implements ConfigurationInterfac
      *
      * @return TreeBuilder The tree builder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('application');
         $rootNode    = $treeBuilder->getRootNode();

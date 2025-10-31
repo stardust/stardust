@@ -1,21 +1,17 @@
 <?php
 namespace Stardust\Core\Controllers;
 
-use Stardust\Core\Services\Configuration\ConfigurationLoaderService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController
 {
-    private mixed $configuration;
-
     private Session $session;
 
-    public function __construct(ConfigurationLoaderService $configuration, Session $session)
+    public function __construct(Session $session)
     {
-        $this->configuration = $configuration->values();
-        $this->session       = $session;
+        $this->session = $session;
 
         $defaultBag = new AttributeBag('default');
         $defaultBag->setName('Default');
@@ -24,11 +20,19 @@ class DefaultController
         $this->session->start();
     }
 
+    /**
+     * @return array<string, string>
+     */
+    /**
+     * @return array<string, string>
+     */
     public function indexAction(Request $request): array
     {
+        $acceptedFormat = $request->headers->get('Accept') ?? 'text/html';
+        
         return [
-            'accepted_format' => $request->headers->get('Accept'),
-            'body'            => "Welcome to {$this->configuration->application->name} {$this->configuration->application->version} by {$this->configuration->application->author}!",
+            'accepted_format' => $acceptedFormat,
+            'body'            => 'Welcome to Stardust!',
         ];
     }
 }
